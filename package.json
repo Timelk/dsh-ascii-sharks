@@ -1,0 +1,76 @@
+{
+  "name": "dsh-ascii-sharks",
+  "version": "1.0.3",
+  "description": "Whole-page ASCII shark ocean for DeepSeek Harness: boid schools and hunting sharks behind a transparent, theme-aware frosted page layer.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Timelk",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "deepseek",
+    "cordis",
+    "ascii",
+    "ascii-art",
+    "sharks",
+    "ocean",
+    "canvas",
+    "background"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Timelk/dsh-ascii-sharks.git"
+  },
+  "homepage": "https://github.com/Timelk/dsh-ascii-sharks#readme",
+  "bugs": {
+    "url": "https://github.com/Timelk/dsh-ascii-sharks/issues"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.1.5-rc.1"
+  },
+  "icon": "./icon.svg",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSE.ascii-sharks",
+    "build.mjs",
+    "src/**"
+  ],
+  "scripts": {
+    "build": "bun build.mjs",
+    "check": "node --check client.js && node --check index.js",
+    "prepublishOnly": "npm run check"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-settings"
+      ]
+    }
+  }
+}

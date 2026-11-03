@@ -1,0 +1,33 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Verify bundle
+        run: node --check client.js && node --check index.js
+      - name: Publish to npm
+        if: env.NODE_AUTH_TOKEN != ''
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: No token configured
+        if: env.NODE_AUTH_TOKEN == ''
+        run: echo "NPM_TOKEN is not configured for this repository; skipping npm publish."
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
